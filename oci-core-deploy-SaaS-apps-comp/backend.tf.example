@@ -1,0 +1,8 @@
+Rename to backend.tf and configure for your environment:
+For OCI Object Storage backend:
+terraform {
+backend "http" {
+address = "https://objectstorage.us-ashburn-1.oraclecloud.com/p/<pre-auth-request-path>/n/<namespace>/b/<bucket>/o/terraform.tfstate"
+update_method = "PUT"
+}
+}

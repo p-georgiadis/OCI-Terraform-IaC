@@ -1,0 +1,43 @@
+name,description,Environment,Owner
+CIS-Auditors,CIS Compliance auditors with read permissions,Prod,Security Team
+NetworkAdmins,Network administrators for IaaS infrastructure,Prod,Network Team
+DBAdmins,Database administrators for IaaS databases,Prod,DBA Team
+ARCS-Prod-Admins,ARCS production environment administrators,Prod,Finance
+ARCS-Test-Admins,ARCS test environment administrators,Test,Finance
+Finance-Auditors,Finance auditors with read-only access,Prod,Finance
+EPM_Admins,Administrators for EPM environment,Prod,IAM Team
+ARCS_Users,Users of the ARCS module,Test,ARCS Lead
+Finance_ReadOnly,Read-only access to financial data,Prod,Finance
+IAM_OCI_SECUREROLE_IAMAdmins,IAM group for IAM Admins,PROD,IAM Team
+IAM_OCI_SECUREROLE_SECAdmins,IAM group for Security Admins,PROD,SEcurity Team
+IAM_OCI_SECUREROLE_EPM_ServiceAdministrators,,,Finance
+IAM_OCI_SECUREROLE_EPM_PowerUsers,,,Finance
+IAM_OCI_SECUREROLE_EPM_Users,,,Finance
+IAM_OCI_SECUREROLE_Viewer,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_AccessControlManage,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_AccessControlView,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_AlertTypesManage,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_AnnouncementsManage,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_AuditView,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_CurrenciesManage,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_DashboardsManage,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_DataIntegrationAdministrator,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_DataIntegrationCreate,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_DataIntegrationRun,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_DataLoadsManage,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_JobsView,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_MatchTypesManage,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_MatchTypesView,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_MigrationsAdministrator,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_OrganizationsManage,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_PeriodsManage,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_PeriodsView,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_ProfilesView,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_ProfilesandReconciliationsManage,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_PublicFiltersandViewsManage,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_ReconciliationCommentator,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_ReconciliationPreparer,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_ReconciliationReviewer,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_ReportsManage,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_TeamsManage,,,Finance
+IAM_OCI_SECUREROLE_EPM_ARCS_UsersManage,,,Finance
