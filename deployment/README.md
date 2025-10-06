@@ -64,6 +64,11 @@ wget https://raw.githubusercontent.com/oci-landing-zones/oci-cis-landingzone-qui
 oci session authenticate
 python3 cis_reports.py -st --obp
 ```
+or in Cloud Shell: 
+```bash
+wget https://raw.githubusercontent.com/oci-landing-zones/oci-cis-landingzone-quickstart/main/scripts/cis_reports.py
+python3 cis_reports.py -dt --all-resources
+```
 
 ## Future Activation
 
