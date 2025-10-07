@@ -58,11 +58,23 @@ All compartments have zero quotas to prevent unauthorized resources:
 ## CIS Compliance
 
 The deployment includes a CIS-Auditors group with permissions to run compliance checks:
+After deployment, run CIS compliance check
+Create a Python Virtual Environment with required modules
+Libraries for Dashboard Graphics (optional)
+Libraries for XLSX Output (optional)
 ```bash
 # After deployment, run CIS compliance check
+python3 -m venv python-venv
+source python-venv/bin/activate
+pip3 install oci
+pip3 install pytz
+pip3 install requests
+pip3 install numpy
+pip3 install matplotlib
+pip3 install xlsxwriter
 wget https://raw.githubusercontent.com/oci-landing-zones/oci-cis-landingzone-quickstart/main/scripts/cis_reports.py
 oci session authenticate
-python3 cis_reports.py -st --obp
+python3 cis_reports.py --obp
 ```
 or in Cloud Shell: 
 ```bash
