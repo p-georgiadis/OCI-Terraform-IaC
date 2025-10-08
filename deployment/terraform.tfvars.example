@@ -1,0 +1,61 @@
+# Example terraform.tfvars for CIS Compliance Deployment
+# Copy this file to deployment/terraform.tfvars and update with your values
+
+# =============================================================================
+# OCI Authentication (REQUIRED)
+# =============================================================================
+tenancy_ocid     = "ocid1.tenancy.oc1..aaaaaaaa..."  # Your tenancy OCID
+user_ocid        = "ocid1.user.oc1..aaaaaaaa..."     # Your user OCID
+fingerprint      = "aa:bb:cc:dd:ee:ff:..."           # Your API key fingerprint
+private_key_path = "~/.oci/oci_api_key.pem"         # Path to your private key
+region           = "us-ashburn-1"                     # Your home region
+
+# Optional: If your private key is password-protected
+# private_key_password = "your-password"
+
+# =============================================================================
+# Security Configuration (REQUIRED for CIS 4.2)
+# =============================================================================
+# Email addresses to receive security notifications
+# These addresses will receive:
+# - Identity and Access Management changes
+# - Network configuration changes
+# - Cloud Guard security findings
+security_notification_emails = [
+  "security-team@yourcompany.com",
+  "compliance@yourcompany.com",
+  "it-operations@yourcompany.com"
+]
+
+# =============================================================================
+# Compartment Configuration (Optional - defaults shown)
+# =============================================================================
+# shared_services_compartment_name = "shared-services"
+# shared_services_description      = "Compartment for shared OCI services including Cloud Guard, logging, and monitoring"
+# iaas_compartment_name            = "IaaS-Root"
+# enable_compartment_delete        = true  # Set to false for production
+
+# =============================================================================
+# Cloud Guard Configuration (Optional - defaults shown)
+# =============================================================================
+# notification_topic_name           = "security-notifications"
+# cloud_guard_target_name           = "root-compartment-target"
+# cloud_guard_self_manage_resources = false  # Set to true to allow Cloud Guard auto-remediation
+
+# =============================================================================
+# Policy Configuration (Optional - defaults shown)
+# =============================================================================
+# enable_arcs_policies = true   # Enable ARCS-specific policies
+# enable_iaas_policies = false  # Enable IaaS policies (requires NetworkAdmins, DBAdmins groups)
+
+# =============================================================================
+# IaaS Configuration (Optional - defaults shown)
+# =============================================================================
+# iaas_create_environments = false  # Set to true to create prod/non-prod environments
+
+# =============================================================================
+# Tag Configuration (Optional - defaults shown)
+# =============================================================================
+# cost_center_values = ["Finance", "IT", "Operations", "Shared"]
+# environment_values = ["Production", "Test", "Development", "Staging", "Parked"]
+# application_values = ["ARCS", "Planning", "EDMCS", "Freeform", "Infrastructure", "Security"]
