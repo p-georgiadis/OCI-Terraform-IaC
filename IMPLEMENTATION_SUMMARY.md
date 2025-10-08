@@ -8,7 +8,7 @@ This implementation addresses the failing CIS OCI Foundation Benchmark complianc
 
 ### Initial CIS Report Findings
 
-From your `CIS REPORT/cis_html_summary_report.html`, the primary compliance gaps were:
+From the original `CIS REPORT/cis_html_summary_report.html`, the primary compliance gaps were:
 
 | Finding | Count | Impact |
 |---------|-------|--------|
