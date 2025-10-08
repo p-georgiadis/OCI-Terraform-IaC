@@ -94,3 +94,28 @@ variable "application_values" {
   type        = list(string)
   default     = ["ARCS", "Planning", "EDMCS", "Freeform", "Infrastructure", "Security"]
 }
+
+# Security Module Configuration
+variable "security_notification_emails" {
+  description = "List of email addresses to receive security notifications"
+  type        = list(string)
+  default     = []
+}
+
+variable "notification_topic_name" {
+  description = "Name for the security notification topic"
+  type        = string
+  default     = "security-notifications"
+}
+
+variable "cloud_guard_target_name" {
+  description = "Display name for the Cloud Guard target"
+  type        = string
+  default     = "root-compartment-target"
+}
+
+variable "cloud_guard_self_manage_resources" {
+  description = "Allow Cloud Guard to create and manage resources for remediation"
+  type        = bool
+  default     = false
+}

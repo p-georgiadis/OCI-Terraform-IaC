@@ -58,7 +58,34 @@ module "iaas_compartments" {
   create_environment_separation = var.iaas_create_environments
 }
 
-# 5. Deploy Policies (must be last)
+# 5. Deploy Security Services (Cloud Guard, Monitoring, Notifications)
+module "security" {
+  source = "../oci-core-deploy-security"
+
+  depends_on = [
+    module.shared_services
+  ]
+
+  tenancy_ocid         = var.tenancy_ocid
+  user_ocid            = var.user_ocid
+  fingerprint          = var.fingerprint
+  private_key_path     = var.private_key_path
+  private_key_password = var.private_key_password
+  region               = var.region
+
+  # Shared Services Compartment for notifications
+  shared_services_compartment_id = module.shared_services.compartment_id
+
+  # Security notification emails
+  security_notification_emails = var.security_notification_emails
+
+  # Optional: Custom Cloud Guard configuration
+  notification_topic_name               = var.notification_topic_name
+  cloud_guard_target_name               = var.cloud_guard_target_name
+  cloud_guard_self_manage_resources     = var.cloud_guard_self_manage_resources
+}
+
+# 6. Deploy Policies (must be last)
 module "policies" {
   source = "../oci-core-policies"
 
@@ -66,7 +93,8 @@ module "policies" {
     module.groups,
     module.shared_services,
     module.saas_compartments,
-    module.iaas_compartments
+    module.iaas_compartments,
+    module.security
   ]
 
   tenancy_ocid         = var.tenancy_ocid
