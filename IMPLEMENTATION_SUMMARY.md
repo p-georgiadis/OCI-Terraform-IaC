@@ -24,18 +24,18 @@ From your `CIS REPORT/cis_html_summary_report.html`, the primary compliance gaps
 ### Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    Root Compartment                          │
+┌────────────────────────────────────────────────────────────┐
+│                    Root Compartment                        │
 │  ┌─────────────────────────────────────────────────────┐   │
-│  │           Cloud Guard Configuration                  │   │
-│  │  • Status: ENABLED                                   │   │
+│  │           Cloud Guard Configuration                 │   │
+│  │  • Status: ENABLED                                  │   │
 │  │  • Detector Recipes: Oracle-managed (Config,        │   │
-│  │    Activity, Threat)                                 │   │
+│  │    Activity, Threat)                                │   │
 │  │  • Target: Root Compartment (monitors all)          │   │
-│  └─────────────────────────────────────────────────────┘   │
-│                                                              │
+│  └─────────────────────────────────────────────────────┘   │ 
+│                                                            │
 │  ┌─────────────────────────────────────────────────────┐   │
-│  │              Event Rules (11 total)                  │   │
+│  │              Event Rules (11 total)                 │   │
 │  │  4.3  → Identity Provider changes                   │   │
 │  │  4.4  → IdP Group Mapping changes                   │   │
 │  │  4.5  → IAM Group changes                           │   │
@@ -48,23 +48,23 @@ From your `CIS REPORT/cis_html_summary_report.html`, the primary compliance gaps
 │  │  4.12 → Network Gateway changes                     │   │
 │  │  4.15 → Cloud Guard Problems                        │   │
 │  └─────────────────────────────────────────────────────┘   │
-│                          │                                   │
-│                          ▼                                   │
+│                          │                                 │
+│                          ▼                                 │
 │  ┌─────────────────────────────────────────────────────┐   │
-│  │         shared-services Compartment                  │   │
+│  │         shared-services Compartment                 │   │
 │  │  ┌───────────────────────────────────────────────┐  │   │
-│  │  │     ONS Notification Topic                     │  │   │
-│  │  │     "security-notifications"                   │  │   │
-│  │  │                                                 │  │   │
+│  │  │     ONS Notification Topic                    │  │   │
+│  │  │     "security-notifications"                  │  │   │
+│  │  │                                               │  │   │
 │  │  │  ┌─────────────────────────────────────────┐  │  │   │
 │  │  │  │   Email Subscriptions                   │  │  │   │
-│  │  │  │   • security-team@company.com          │  │  │   │
-│  │  │  │   • compliance@company.com             │  │  │   │
-│  │  │  │   • ops@company.com                    │  │  │   │
+│  │  │  │   • security-team@company.com           │  │  │   │
+│  │  │  │   • compliance@company.com              │  │  │   │
+│  │  │  │   • ops@company.com                     │  │  │   │
 │  │  │  └─────────────────────────────────────────┘  │  │   │
 │  │  └───────────────────────────────────────────────┘  │   │
 │  └─────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
+└────────────────────────────────────────────────────────────┘
 ```
 
 ### Module Structure
