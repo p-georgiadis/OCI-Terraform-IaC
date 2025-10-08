@@ -32,3 +32,29 @@ output "policy_ids" {
   description = "All policy OCIDs"
   value       = module.policies.policy_ids
 }
+
+# Security Module Outputs
+output "security_configuration" {
+  description = "Security module deployment status"
+  value = {
+    cloud_guard_status           = module.security.cloud_guard_config_status
+    cloud_guard_target_id        = module.security.cloud_guard_target_id
+    notification_topic_id        = module.security.security_notification_topic_id
+    notification_topic_name      = module.security.security_notification_topic_name
+    event_rules_count            = length(module.security.event_rule_ids)
+    cis_recommendations_addressed = length(module.security.cis_compliance_summary.recommendations_addressed)
+  }
+}
+
+output "security_notification_topic" {
+  description = "Security notification topic details"
+  value = {
+    id   = module.security.security_notification_topic_id
+    name = module.security.security_notification_topic_name
+  }
+}
+
+output "cis_compliance_status" {
+  description = "CIS compliance coverage from security module"
+  value       = module.security.cis_compliance_summary
+}
