@@ -86,7 +86,8 @@ resource "oci_identity_policy" "arcs_prod_admin_policies" {
   statements = [
     "Allow group ARCS-Prod-Admins to manage epm-planning-environment-family in compartment SaaS-Root:ARCS:ARCS-Prod",
     "Allow group ARCS-Prod-Admins to read all-resources in compartment SaaS-Root:ARCS:ARCS-Prod",
-    "Allow group ARCS-Prod-Admins to manage object-family in compartment SaaS-Root:ARCS:ARCS-Prod where target.bucket.name = 'arcs-prod-*'",
+    # CIS 1.15: Prevent deletion of storage resources (buckets and objects)
+    "Allow group ARCS-Prod-Admins to manage object-family in compartment SaaS-Root:ARCS:ARCS-Prod where all {target.bucket.name = 'arcs-prod-*', request.permission != 'OBJECT_DELETE', request.permission != 'BUCKET_DELETE'}",
   ]
 }
 
@@ -101,7 +102,8 @@ resource "oci_identity_policy" "arcs_test_admin_policies" {
   statements = [
     "Allow group ARCS-Test-Admins to manage epm-planning-environment-family in compartment SaaS-Root:ARCS:ARCS-Test",
     "Allow group ARCS-Test-Admins to read all-resources in compartment SaaS-Root:ARCS:ARCS-Test",
-    "Allow group ARCS-Test-Admins to manage object-family in compartment SaaS-Root:ARCS:ARCS-Test where target.bucket.name = 'arcs-test-*'",
+    # CIS 1.15: Prevent deletion of storage resources (buckets and objects)
+    "Allow group ARCS-Test-Admins to manage object-family in compartment SaaS-Root:ARCS:ARCS-Test where all {target.bucket.name = 'arcs-test-*', request.permission != 'OBJECT_DELETE', request.permission != 'BUCKET_DELETE'}",
   ]
 }
 
@@ -145,7 +147,8 @@ resource "oci_identity_policy" "database_admin_policies" {
   statements = [
     "Allow group DBAdmins to manage database-family in compartment IaaS-Root:Database",
     "Allow group DBAdmins to manage autonomous-database-family in compartment IaaS-Root:Database",
-    "Allow group DBAdmins to manage object-family in compartment IaaS-Root:Database",
+    # CIS 1.15: Prevent deletion of storage resources (buckets and objects)
+    "Allow group DBAdmins to manage object-family in compartment IaaS-Root:Database where all {request.permission != 'OBJECT_DELETE', request.permission != 'BUCKET_DELETE'}",
     "Allow group DBAdmins to read compartments in compartment IaaS-Root",
   ]
 }

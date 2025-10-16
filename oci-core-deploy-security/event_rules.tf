@@ -287,8 +287,10 @@ resource "oci_events_rule" "network_gateway_changes" {
   freeform_tags = var.freeform_tags
 }
 
-# CIS 4.15: Cloud Guard Problems
+# CIS 4.15: Cloud Guard Problems (only when Cloud Guard is enabled)
 resource "oci_events_rule" "cloud_guard_problems" {
+  count = var.enable_cloud_guard ? 1 : 0
+
   compartment_id = var.tenancy_ocid
   display_name   = "cis-4.15-cloud-guard-problems"
   description    = "CIS 4.15: Alert on Cloud Guard Problems"

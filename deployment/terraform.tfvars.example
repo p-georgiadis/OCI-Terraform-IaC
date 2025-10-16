@@ -38,6 +38,7 @@ security_notification_emails = [
 # =============================================================================
 # Cloud Guard Configuration (Optional - defaults shown)
 # =============================================================================
+# enable_cloud_guard                = true   # Set to false for free tier (Cloud Guard requires paid subscription)
 # notification_topic_name           = "security-notifications"
 # cloud_guard_target_name           = "root-compartment-target"
 # cloud_guard_self_manage_resources = false  # Set to true to allow Cloud Guard auto-remediation

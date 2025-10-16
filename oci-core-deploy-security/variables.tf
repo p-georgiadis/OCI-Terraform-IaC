@@ -1,34 +1,20 @@
-# OCI Provider Variables
+# Tenancy OCID (needed for event rules and Cloud Guard)
 variable "tenancy_ocid" {
   type        = string
   description = "The OCID of the tenancy"
 }
 
-variable "user_ocid" {
-  type        = string
-  description = "The OCID of the user"
-}
-
-variable "fingerprint" {
-  type        = string
-  description = "The fingerprint of the API key"
-}
-
-variable "private_key_path" {
-  type        = string
-  description = "The path to the private key file"
-}
-
-variable "private_key_password" {
-  type        = string
-  description = "The password for the private key"
-  default     = ""
-  sensitive   = true
-}
-
+# Region (needed for Cloud Guard reporting region)
 variable "region" {
   type        = string
-  description = "The OCI region"
+  description = "The OCI region for Cloud Guard reporting"
+}
+
+# Enable/Disable Cloud Guard (set to false for free tier)
+variable "enable_cloud_guard" {
+  type        = bool
+  description = "Enable Cloud Guard (requires paid subscription, set to false for free tier)"
+  default     = true
 }
 
 # Shared Services Compartment

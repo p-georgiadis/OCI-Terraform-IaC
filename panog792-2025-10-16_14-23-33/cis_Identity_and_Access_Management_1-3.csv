@@ -1,0 +1,2 @@
+id,name,deep_link,compartment_id,description,lifecycle_state,statements,extract_date
+ocid1.policy.oc1..aaaaaaaacfrfwderdczy47symkq6pvr6uqn34kjmqjwg4couwc42h4hpoxmq,admin-tenancy-policies,"=HYPERLINK(""https://cloud.oracle.com/identity/policies/ocid1.policy.oc1..aaaaaaaacfrfwderdczy47symkq6pvr6uqn34kjmqjwg4couwc42h4hpoxmq"",""admin-tenancy-policies"")",ocid1.tenancy.oc1..aaaaaaaalmgnna3x4zje3z2373atkihy4oqit5uml24yt7tdyrew3fw3vrlq,Administrator policies for tenancy management,ACTIVE,['Allow group Administrators to manage all-resources in tenancy'],2025-10-16T14:23:33

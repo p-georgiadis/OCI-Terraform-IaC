@@ -1,3 +1,0 @@
-id,error,extract_date
-__cloud_guard_read_cloud_guard_configuration,*** Cloud Guard service requires a PayGo account ***,2025-10-07T08:27:39
-run_logging_search_query_api_usage,"(ReadTimeoutError(""OCIConnectionPool(host='logging.eu-frankfurt-1.oci.oraclecloud.com', port=443): Read timed out. (read timeout=60.0)""), 'Request Endpoint: POST https://logging.eu-frankfurt-1.oci.oraclecloud.com/20190909/search See https://docs.oracle.com/en-us/iaas/Content/API/Concepts/sdk_troubleshooting.htm for help troubleshooting this error, or contact support and provide this full error message.')",2025-10-07T08:27:39

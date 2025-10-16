@@ -108,6 +108,12 @@ variable "notification_topic_name" {
   default     = "security-notifications"
 }
 
+variable "enable_cloud_guard" {
+  description = "Enable Cloud Guard (requires paid subscription, set to false for free tier)"
+  type        = bool
+  default     = true
+}
+
 variable "cloud_guard_target_name" {
   description = "Display name for the Cloud Guard target"
   type        = string

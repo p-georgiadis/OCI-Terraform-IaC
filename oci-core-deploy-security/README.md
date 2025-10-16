@@ -66,13 +66,13 @@ This module automates the deployment and configuration of OCI security services 
 module "security" {
   source = "../oci-core-deploy-security"
 
-  # OCI Provider Configuration
-  tenancy_ocid         = var.tenancy_ocid
-  user_ocid            = var.user_ocid
-  fingerprint          = var.fingerprint
-  private_key_path     = var.private_key_path
-  private_key_password = var.private_key_password
-  region               = var.region
+  depends_on = [
+    module.shared_services
+  ]
+
+  # Tenancy OCID and region (needed for Cloud Guard)
+  tenancy_ocid = var.tenancy_ocid
+  region       = var.region
 
   # Required: Shared Services Compartment
   shared_services_compartment_id = module.shared_services.compartment_id
@@ -92,19 +92,20 @@ module "security" {
 }
 ```
 
+**Note**: This module inherits the OCI provider configuration from the parent module, so you don't need to pass provider authentication variables.
+
 ### Complete Example with Custom Recipes
 
 ```hcl
 module "security" {
   source = "../oci-core-deploy-security"
 
-  tenancy_ocid         = var.tenancy_ocid
-  user_ocid            = var.user_ocid
-  fingerprint          = var.fingerprint
-  private_key_path     = var.private_key_path
-  private_key_password = var.private_key_password
-  region               = var.region
+  depends_on = [
+    module.shared_services
+  ]
 
+  tenancy_ocid                   = var.tenancy_ocid
+  region                         = var.region
   shared_services_compartment_id = module.shared_services.compartment_id
 
   security_notification_emails = ["security@example.com"]

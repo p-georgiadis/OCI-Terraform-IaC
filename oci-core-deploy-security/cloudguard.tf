@@ -1,8 +1,11 @@
 # Cloud Guard Configuration
 # CIS Recommendation 4.14: Enable Cloud Guard in root compartment
+# Note: Cloud Guard requires a paid subscription and is not available on free tier
 
 # Enable Cloud Guard (must be done once per tenancy)
 resource "oci_cloud_guard_cloud_guard_configuration" "cloud_guard_config" {
+  count = var.enable_cloud_guard ? 1 : 0
+
   compartment_id   = var.tenancy_ocid
   reporting_region = var.region
   status           = "ENABLED"
@@ -14,6 +17,8 @@ resource "oci_cloud_guard_cloud_guard_configuration" "cloud_guard_config" {
 # Create Cloud Guard Target for root compartment
 # This monitors the entire tenancy including all child compartments
 resource "oci_cloud_guard_target" "root_target" {
+  count = var.enable_cloud_guard ? 1 : 0
+
   compartment_id       = var.tenancy_ocid
   display_name         = var.cloud_guard_target_name
   target_resource_id   = var.tenancy_ocid
@@ -23,20 +28,20 @@ resource "oci_cloud_guard_target" "root_target" {
 
   # Use Oracle-managed detector recipes (recommended for CIS compliance)
   target_detector_recipes {
-    detector_recipe_id = var.cloud_guard_configuration_detector_recipe_id != "" ? var.cloud_guard_configuration_detector_recipe_id : data.oci_cloud_guard_detector_recipes.oracle_managed_configuration.detector_recipe_collection[0].items[0].id
+    detector_recipe_id = var.cloud_guard_configuration_detector_recipe_id != "" ? var.cloud_guard_configuration_detector_recipe_id : data.oci_cloud_guard_detector_recipes.oracle_managed_configuration[0].detector_recipe_collection[0].items[0].id
   }
 
   target_detector_recipes {
-    detector_recipe_id = var.cloud_guard_activity_detector_recipe_id != "" ? var.cloud_guard_activity_detector_recipe_id : data.oci_cloud_guard_detector_recipes.oracle_managed_activity.detector_recipe_collection[0].items[0].id
+    detector_recipe_id = var.cloud_guard_activity_detector_recipe_id != "" ? var.cloud_guard_activity_detector_recipe_id : data.oci_cloud_guard_detector_recipes.oracle_managed_activity[0].detector_recipe_collection[0].items[0].id
   }
 
   target_detector_recipes {
-    detector_recipe_id = var.cloud_guard_threat_detector_recipe_id != "" ? var.cloud_guard_threat_detector_recipe_id : data.oci_cloud_guard_detector_recipes.oracle_managed_threat.detector_recipe_collection[0].items[0].id
+    detector_recipe_id = var.cloud_guard_threat_detector_recipe_id != "" ? var.cloud_guard_threat_detector_recipe_id : data.oci_cloud_guard_detector_recipes.oracle_managed_threat[0].detector_recipe_collection[0].items[0].id
   }
 
   # Use Oracle-managed responder recipe for automated remediation
   target_responder_recipes {
-    responder_recipe_id = var.cloud_guard_responder_recipe_id != "" ? var.cloud_guard_responder_recipe_id : data.oci_cloud_guard_responder_recipes.oracle_managed.responder_recipe_collection[0].items[0].id
+    responder_recipe_id = var.cloud_guard_responder_recipe_id != "" ? var.cloud_guard_responder_recipe_id : data.oci_cloud_guard_responder_recipes.oracle_managed[0].responder_recipe_collection[0].items[0].id
   }
 
   depends_on = [oci_cloud_guard_cloud_guard_configuration.cloud_guard_config]
@@ -44,23 +49,31 @@ resource "oci_cloud_guard_target" "root_target" {
   freeform_tags = var.freeform_tags
 }
 
-# Data sources to get Oracle-managed recipes
+# Data sources to get Oracle-managed recipes (only when Cloud Guard is enabled)
 data "oci_cloud_guard_detector_recipes" "oracle_managed_configuration" {
+  count = var.enable_cloud_guard ? 1 : 0
+
   compartment_id = var.tenancy_ocid
   display_name   = "OCI Configuration Detector Recipe"
 }
 
 data "oci_cloud_guard_detector_recipes" "oracle_managed_activity" {
+  count = var.enable_cloud_guard ? 1 : 0
+
   compartment_id = var.tenancy_ocid
   display_name   = "OCI Activity Detector Recipe"
 }
 
 data "oci_cloud_guard_detector_recipes" "oracle_managed_threat" {
+  count = var.enable_cloud_guard ? 1 : 0
+
   compartment_id = var.tenancy_ocid
   display_name   = "OCI Threat Detector Recipe"
 }
 
 data "oci_cloud_guard_responder_recipes" "oracle_managed" {
+  count = var.enable_cloud_guard ? 1 : 0
+
   compartment_id = var.tenancy_ocid
   display_name   = "OCI Responder Recipe"
 }

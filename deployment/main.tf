@@ -66,12 +66,9 @@ module "security" {
     module.shared_services
   ]
 
-  tenancy_ocid         = var.tenancy_ocid
-  user_ocid            = var.user_ocid
-  fingerprint          = var.fingerprint
-  private_key_path     = var.private_key_path
-  private_key_password = var.private_key_password
-  region               = var.region
+  # Tenancy OCID and region (needed for Cloud Guard)
+  tenancy_ocid = var.tenancy_ocid
+  region       = var.region
 
   # Shared Services Compartment for notifications
   shared_services_compartment_id = module.shared_services.compartment_id
@@ -79,10 +76,11 @@ module "security" {
   # Security notification emails
   security_notification_emails = var.security_notification_emails
 
-  # Optional: Custom Cloud Guard configuration
-  notification_topic_name               = var.notification_topic_name
-  cloud_guard_target_name               = var.cloud_guard_target_name
-  cloud_guard_self_manage_resources     = var.cloud_guard_self_manage_resources
+  # Cloud Guard configuration
+  enable_cloud_guard                = var.enable_cloud_guard
+  notification_topic_name           = var.notification_topic_name
+  cloud_guard_target_name           = var.cloud_guard_target_name
+  cloud_guard_self_manage_resources = var.cloud_guard_self_manage_resources
 }
 
 # 6. Deploy Policies (must be last)
