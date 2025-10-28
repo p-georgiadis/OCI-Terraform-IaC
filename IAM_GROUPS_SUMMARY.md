@@ -21,6 +21,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 ## Administrative Groups
 
 ### 1. **Administrators** (Built-in OCI Group)
+
 **Owner**: Tenancy Root
 **Environment**: Production
 **Policy**: `admin-tenancy-policies`
@@ -28,6 +29,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 **Purpose**: Break-glass tenancy-level administrators with full access to all OCI resources.
 
 **Permissions**:
+
 - ✅ Manage all resources in tenancy
 - ✅ Full administrative control
 - ✅ Break-glass emergency access
@@ -35,12 +37,14 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 **Use Case**: Emergency access, initial tenancy setup, critical operations requiring full privileges.
 
 **CIS Compliance Notes**:
+
 - ⚠️ Users in this group should NOT have API keys (CIS 1.12)
 - ✅ This is the ONLY group with tenancy-wide manage access (CIS 1.2)
 
 ---
 
 ### 2. **IAM_OCI_SECUREROLE_IAMAdmins**
+
 **Owner**: IAM Team
 **Environment**: Production
 **Policy**: `iam-admin-policies`
@@ -48,6 +52,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 **Purpose**: IAM administrators responsible for user, group, and policy management.
 
 **Permissions**:
+
 - ✅ Manage users in tenancy
 - ✅ Manage groups in tenancy
 - ✅ Manage policies in tenancy
@@ -59,12 +64,14 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 **Use Case**: Day-to-day IAM administration, user onboarding/offboarding, group membership management.
 
 **Restrictions**:
+
 - ❌ Cannot manage the Administrators group (enforced by policy conditions - would need to be added)
 - ❌ Cannot create/delete tenancy-level resources outside IAM
 
 ---
 
 ### 3. **IAM_OCI_SECUREROLE_SECAdmins**
+
 **Owner**: Security Team
 **Environment**: Production
 **Policy**: `security-admin-policies`
@@ -72,6 +79,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 **Purpose**: Security administrators managing Cloud Guard, logging, monitoring, and security infrastructure.
 
 **Permissions** (in shared-services compartment):
+
 - ✅ Manage cloud-guard-family
 - ✅ Manage log-groups
 - ✅ Manage logs
@@ -90,6 +98,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 ---
 
 ### 4. **EPM_Admins**
+
 **Owner**: IAM Team
 **Environment**: Production
 **Policy**: No specific policy assigned yet
@@ -103,6 +112,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 ## EPM Application Groups
 
 ### 5. **IAM_OCI_SECUREROLE_EPM_ServiceAdministrators**
+
 **Owner**: Finance
 **Environment**: Production
 **Policy**: `epm-service-admin-policies`
@@ -110,6 +120,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 **Purpose**: EPM service-level administrators who can manage EPM environments but cannot create new ones.
 
 **Permissions** (in SaaS-Root:ARCS):
+
 - ✅ Manage epm-planning-environment-family (except CREATE)
 - ✅ Read all-resources
 - ✅ Use cloud-shell
@@ -117,6 +128,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 **Use Case**: Day-to-day EPM administration, configuration changes, service management.
 
 **Restrictions**:
+
 - ❌ Cannot create new EPM environments (requires Administrators or specific permission)
 
 **CIS Compliance**: ✅ Separation of duties - admins can manage but not create.
@@ -124,6 +136,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 ---
 
 ### 6. **IAM_OCI_SECUREROLE_EPM_PowerUsers**
+
 **Owner**: Finance
 **Environment**: Production
 **Policy**: `epm-user-policies`
@@ -131,6 +144,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 **Purpose**: Power users with full management capabilities within EPM applications.
 
 **Permissions** (in SaaS-Root:ARCS):
+
 - ✅ Manage epm-planning-environment-family
 
 **Use Case**: Advanced EPM users who need to configure and manage EPM instances.
@@ -138,6 +152,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 ---
 
 ### 7. **IAM_OCI_SECUREROLE_EPM_Users**
+
 **Owner**: Finance
 **Environment**: Production
 **Policy**: `epm-user-policies`
@@ -145,17 +160,20 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 **Purpose**: Standard EPM application users.
 
 **Permissions** (in SaaS-Root:ARCS):
+
 - ✅ Use epm-planning-environment-family (read/execute)
 
 **Use Case**: Regular EPM users performing daily tasks.
 
 **Restrictions**:
+
 - ❌ Cannot modify EPM configurations
 - ❌ Cannot create/delete resources
 
 ---
 
 ### 8. **IAM_OCI_SECUREROLE_Viewer**
+
 **Owner**: Finance
 **Environment**: Production
 **Policy**: `epm-user-policies`
@@ -163,6 +181,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 **Purpose**: Read-only viewers across all SaaS applications.
 
 **Permissions**:
+
 - ✅ Read all-resources in SaaS-Root compartment
 
 **Use Case**: Stakeholders, managers, auditors who need visibility without modification rights.
@@ -172,6 +191,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 ## ARCS-Specific Administration Groups
 
 ### 9. **ARCS-Prod-Admins**
+
 **Owner**: Finance
 **Environment**: Production
 **Policy**: `arcs-prod-admin-policies`
@@ -179,6 +199,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 **Purpose**: Administrators for ARCS production environment.
 
 **Permissions** (in SaaS-Root:ARCS:ARCS-Prod):
+
 - ✅ Manage epm-planning-environment-family
 - ✅ Read all-resources
 - ✅ Manage object-family (buckets matching 'arcs-prod-*')
@@ -186,6 +207,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 **Use Case**: Production ARCS environment management, configuration, backups.
 
 **CIS 1.15 Compliance** ✅:
+
 - ✅ Can create/modify buckets and objects
 - ❌ **Cannot delete buckets** (BUCKET_DELETE restricted)
 - ❌ **Cannot delete objects** (OBJECT_DELETE restricted)
@@ -195,6 +217,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 ---
 
 ### 10. **ARCS-Test-Admins**
+
 **Owner**: Finance
 **Environment**: Test/UAT
 **Policy**: `arcs-test-admin-policies`
@@ -202,6 +225,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 **Purpose**: Administrators for ARCS test/UAT environment.
 
 **Permissions** (in SaaS-Root:ARCS:ARCS-Test):
+
 - ✅ Manage epm-planning-environment-family
 - ✅ Read all-resources
 - ✅ Manage object-family (buckets matching 'arcs-test-*')
@@ -209,6 +233,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 **Use Case**: Test environment management, UAT support, development testing.
 
 **CIS 1.15 Compliance** ✅:
+
 - ✅ Can create/modify buckets and objects
 - ❌ **Cannot delete buckets** (BUCKET_DELETE restricted)
 - ❌ **Cannot delete objects** (OBJECT_DELETE restricted)
@@ -216,6 +241,7 @@ This document provides a comprehensive overview of all 42 IAM groups deployed in
 ---
 
 ### 11. **ARCS_Users**
+
 **Owner**: ARCS Lead
 **Environment**: Test
 **Policy**: No specific policy assigned
@@ -233,11 +259,13 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 ### Access Control
 
 #### 12. **IAM_OCI_SECUREROLE_EPM_ARCS_AccessControlManage**
+
 **Purpose**: Manage access control settings within ARCS
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 13. **IAM_OCI_SECUREROLE_EPM_ARCS_AccessControlView**
+
 **Purpose**: View access control settings within ARCS
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
@@ -247,11 +275,13 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 ### Alerts & Announcements
 
 #### 14. **IAM_OCI_SECUREROLE_EPM_ARCS_AlertTypesManage**
+
 **Purpose**: Manage alert type configurations in ARCS
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 15. **IAM_OCI_SECUREROLE_EPM_ARCS_AnnouncementsManage**
+
 **Purpose**: Manage system announcements in ARCS
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
@@ -261,6 +291,7 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 ### Audit & Compliance
 
 #### 16. **IAM_OCI_SECUREROLE_EPM_ARCS_AuditView**
+
 **Purpose**: View audit trails and logs within ARCS
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
@@ -270,26 +301,31 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 ### Configuration Management
 
 #### 17. **IAM_OCI_SECUREROLE_EPM_ARCS_CurrenciesManage**
+
 **Purpose**: Manage currency configurations for reconciliations
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 18. **IAM_OCI_SECUREROLE_EPM_ARCS_PeriodsManage**
+
 **Purpose**: Manage accounting periods in ARCS
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 19. **IAM_OCI_SECUREROLE_EPM_ARCS_PeriodsView**
+
 **Purpose**: View accounting periods (read-only)
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 20. **IAM_OCI_SECUREROLE_EPM_ARCS_OrganizationsManage**
+
 **Purpose**: Manage organizational hierarchies in ARCS
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 21. **IAM_OCI_SECUREROLE_EPM_ARCS_TeamsManage**
+
 **Purpose**: Manage team assignments and structures
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
@@ -299,21 +335,25 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 ### Data Integration
 
 #### 22. **IAM_OCI_SECUREROLE_EPM_ARCS_DataIntegrationAdministrator**
+
 **Purpose**: Full administration of data integration processes
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 23. **IAM_OCI_SECUREROLE_EPM_ARCS_DataIntegrationCreate**
+
 **Purpose**: Create new data integration jobs and mappings
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 24. **IAM_OCI_SECUREROLE_EPM_ARCS_DataIntegrationRun**
+
 **Purpose**: Execute existing data integration jobs
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 25. **IAM_OCI_SECUREROLE_EPM_ARCS_DataLoadsManage**
+
 **Purpose**: Manage data load processes and schedules
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
@@ -323,6 +363,7 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 ### Jobs & Monitoring
 
 #### 26. **IAM_OCI_SECUREROLE_EPM_ARCS_JobsView**
+
 **Purpose**: View job statuses and execution history
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
@@ -332,11 +373,13 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 ### Match Types
 
 #### 27. **IAM_OCI_SECUREROLE_EPM_ARCS_MatchTypesManage**
+
 **Purpose**: Manage reconciliation match types and rules
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 28. **IAM_OCI_SECUREROLE_EPM_ARCS_MatchTypesView**
+
 **Purpose**: View match types (read-only)
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
@@ -346,6 +389,7 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 ### Migrations
 
 #### 29. **IAM_OCI_SECUREROLE_EPM_ARCS_MigrationsAdministrator**
+
 **Purpose**: Administer data migrations and snapshots
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
@@ -355,26 +399,31 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 ### Profiles & Reconciliations
 
 #### 30. **IAM_OCI_SECUREROLE_EPM_ARCS_ProfilesView**
+
 **Purpose**: View reconciliation profiles (read-only)
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 31. **IAM_OCI_SECUREROLE_EPM_ARCS_ProfilesandReconciliationsManage**
+
 **Purpose**: Full management of profiles and reconciliations
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 32. **IAM_OCI_SECUREROLE_EPM_ARCS_ReconciliationCommentator**
+
 **Purpose**: Add comments to reconciliations
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 33. **IAM_OCI_SECUREROLE_EPM_ARCS_ReconciliationPreparer**
+
 **Purpose**: Prepare and submit reconciliations
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 34. **IAM_OCI_SECUREROLE_EPM_ARCS_ReconciliationReviewer**
+
 **Purpose**: Review and approve reconciliations
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
@@ -384,16 +433,19 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 ### Reporting & Dashboards
 
 #### 35. **IAM_OCI_SECUREROLE_EPM_ARCS_DashboardsManage**
+
 **Purpose**: Create and manage ARCS dashboards
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 36. **IAM_OCI_SECUREROLE_EPM_ARCS_ReportsManage**
+
 **Purpose**: Create and manage ARCS reports
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
 
 #### 37. **IAM_OCI_SECUREROLE_EPM_ARCS_PublicFiltersandViewsManage**
+
 **Purpose**: Manage shared filters and views
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
@@ -403,6 +455,7 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 ### User Management
 
 #### 38. **IAM_OCI_SECUREROLE_EPM_ARCS_UsersManage**
+
 **Purpose**: Manage ARCS application user settings
 **Owner**: Finance
 **OCI Policy**: None (EPM application-level role)
@@ -412,6 +465,7 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 ## Finance & Audit Groups
 
 ### 39. **Finance-Auditors**
+
 **Owner**: Finance
 **Environment**: Production
 **Policy**: `finance-auditor-policies`
@@ -419,18 +473,21 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 **Purpose**: Finance team members with audit capabilities.
 
 **Permissions**:
+
 - ✅ Read all-resources in SaaS-Root compartment
 - ✅ Read audit-events in SaaS-Root compartment
 
 **Use Case**: Financial audits, compliance reviews, data verification.
 
 **Restrictions**:
+
 - ❌ Cannot modify any resources
 - ❌ Read-only access
 
 ---
 
 ### 40. **Finance_ReadOnly**
+
 **Owner**: Finance
 **Environment**: Production
 **Policy**: `finance-auditor-policies`
@@ -438,17 +495,20 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 **Purpose**: Read-only access for finance team members.
 
 **Permissions**:
+
 - ✅ Read all-resources in SaaS-Root compartment
 
 **Use Case**: Finance stakeholders who need visibility into EPM resources.
 
 **Restrictions**:
+
 - ❌ Cannot modify any resources
 - ❌ Cannot read audit events (use Finance-Auditors for that)
 
 ---
 
 ### 41. **CIS-Auditors**
+
 **Owner**: Security Team
 **Environment**: Production
 **Policy**: `cis-auditor-policies`
@@ -456,6 +516,7 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 **Purpose**: CIS compliance script auditors with tenancy-wide read permissions.
 
 **Permissions** (Tenancy-wide):
+
 - ✅ Inspect all-resources
 - ✅ Read instances, load-balancers, buckets, networking, file-family
 - ✅ Read instance-configurations, network-security-groups
@@ -473,6 +534,7 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 **Use Case**: Running CIS compliance scans, security audits, compliance reporting.
 
 **Restrictions**:
+
 - ❌ Cannot create, update, delete, or change any resources
 - ❌ Read-only access across entire tenancy
 
@@ -485,6 +547,7 @@ These 27 groups map to specific ARCS application roles. They are created in OCI 
 These groups are created but have **no active policies** yet (policies are disabled via `deploy_iaas_policies = false`).
 
 ### 42. **NetworkAdmins**
+
 **Owner**: Network Team
 **Environment**: Production
 **Policy**: `network-admin-policies` (DISABLED)
@@ -492,6 +555,7 @@ These groups are created but have **no active policies** yet (policies are disab
 **Purpose**: Network administrators for future IaaS infrastructure.
 
 **Future Permissions** (when enabled):
+
 - Manage virtual-network-family in IaaS-Root:Network
 - Manage load-balancers in IaaS-Root:Network
 - Manage network-security-groups in IaaS-Root:Network
@@ -502,6 +566,7 @@ These groups are created but have **no active policies** yet (policies are disab
 ---
 
 ### 43. **DBAdmins**
+
 **Owner**: DBA Team
 **Environment**: Production
 **Policy**: `database-admin-policies` (DISABLED)
@@ -509,12 +574,14 @@ These groups are created but have **no active policies** yet (policies are disab
 **Purpose**: Database administrators for future IaaS databases.
 
 **Future Permissions** (when enabled, in IaaS-Root:Database):
+
 - Manage database-family
 - Manage autonomous-database-family
 - Manage object-family (with delete restrictions per CIS 1.15)
 - Read compartments in IaaS-Root
 
 **CIS 1.15 Compliance** (when enabled):
+
 - ✅ Can create/modify buckets and objects
 - ❌ **Cannot delete buckets** (BUCKET_DELETE restricted)
 - ❌ **Cannot delete objects** (OBJECT_DELETE restricted)
@@ -559,22 +626,26 @@ These groups are used for EPM application-level authorization. OCI IAM recognize
 ## Best Practices & Recommendations
 
 ### User Assignment
+
 1. **Least Privilege**: Assign users to the most restrictive group that meets their needs
 2. **Multiple Groups**: Users can be in multiple groups - permissions are additive
 3. **Admin Groups**: Minimize membership in Administrators and IAM_OCI_SECUREROLE_IAMAdmins
 4. **Service Accounts**: Use service-level groups (ARCS-*-Admins, EPM_ServiceAdministrators) for automation
 
 ### CIS Compliance
+
 1. **CIS 1.12**: Do NOT assign API keys to users in Administrators group
 2. **CIS 1.15**: Storage admin groups have delete restrictions - use Administrators for deletions
 3. **CIS 1.1-1.3**: Service-level admin structure is implemented correctly
 
 ### Security
+
 1. **Separation of Duties**: Production (ARCS-Prod-Admins) and Test (ARCS-Test-Admins) are separate
 2. **Audit Trail**: CIS-Auditors can review but not modify
 3. **Read-Only Groups**: Finance-Auditors and Finance_ReadOnly for stakeholder visibility
 
 ### Future Enhancements
+
 1. **IaaS Activation**: Set `enable_iaas_policies = true` when ready to use IaaS infrastructure
 2. **EPM Policies**: Add OCI-level policies for EPM functional roles if needed
 3. **Custom Roles**: Create additional groups for specific use cases as needed
@@ -584,6 +655,7 @@ These groups are used for EPM application-level authorization. OCI IAM recognize
 ## Maintenance
 
 ### Adding Users to Groups
+
 ```bash
 # Via OCI Console
 Identity → Domains → Default → Groups → [Group Name] → Add User
@@ -593,11 +665,13 @@ oci iam group add-user --group-id <group-ocid> --user-id <user-ocid>
 ```
 
 ### Adding New Groups
+
 1. Edit `oci-core-deploy-groups/csv_groups.csv`
 2. Add line: `GroupName,Description,Environment,Owner`
 3. Run `terraform apply` from `deployment/`
 
 ### Modifying Policies
+
 1. Edit `oci-core-policies/policies.tf`
 2. Update the relevant `statements` array
 3. Run `terraform apply` from `deployment/`

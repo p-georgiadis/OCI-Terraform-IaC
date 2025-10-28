@@ -39,6 +39,7 @@ Tenancy Root
 ## Quick Start
 
 ### Prerequisites
+
 - OCI tenancy with administrator access
 - Terraform >= 1.3
 - OCI CLI configured with credentials
@@ -62,8 +63,9 @@ terraform apply
 ```
 
 This deploys **90+ resources** in the correct dependency order:
+
 - **43 IAM Groups**
-- **13 Compartments** 
+- **13 Compartments**
 - **9 IAM Policies**
 - **3 Quota Policies**
 - **1 Tag Namespace + 3 Tags**
@@ -84,6 +86,7 @@ This repository now includes automated deployment of CIS OCI Foundation Benchmar
 📋 **[CIS_COMPLIANCE_IMPROVEMENTS.md](./CIS_COMPLIANCE_IMPROVEMENTS.md)** - Complete guide to CIS compliance improvements
 
 **Implemented via Terraform (13 CIS Recommendations):**
+
 - ✅ **4.2** - Notification topic and subscriptions for security alerts
 - ✅ **4.3-4.12** - Event rules monitoring IAM and network changes
 - ✅ **4.14** - Cloud Guard enabled in root compartment
@@ -94,18 +97,21 @@ This repository now includes automated deployment of CIS OCI Foundation Benchmar
 **Additional Manual Steps Required:** See [CIS_COMPLIANCE_IMPROVEMENTS.md](./CIS_COMPLIANCE_IMPROVEMENTS.md) for credential rotation, password policies, and other operational items.
 
 ### Existing Security Features
+
 - Groups configured for least privilege access
 - Compartment isolation following CIS guidelines
 - Zero quotas preventing unauthorized resource creation
 - CIS-Auditors group for compliance checking
 
 ### Run Compliance Check in Cloud Shell
+
 ```bash
 wget https://raw.githubusercontent.com/oci-landing-zones/oci-cis-landingzone-quickstart/main/scripts/cis_reports.py
 python3 cis_reports.py -dt --all-resources
 ```
 
 ### Zero Trust Model
+
 - All compartments start with zero quotas
 - Explicit policies required for any resource creation
 - Network/Database/Compute locked until approved
@@ -113,6 +119,7 @@ python3 cis_reports.py -dt --all-resources
 ## Current State
 
 ### Active
+
 - ✅ ARCS production and test environments
 - ✅ 43 IAM groups with role-based access
 - ✅ Cost tracking tags (CostCenter, Environment, Application)
@@ -122,6 +129,7 @@ python3 cis_reports.py -dt --all-resources
 - ✅ **NEW: CIS-compliant monitoring infrastructure**
 
 ### Reserved for Future
+
 - IaaS infrastructure (zero quotas enforced)
 - Advanced logging and SIEM integration (pending QRadar configuration)
 - Other EPM modules (Planning, EDMCS, Freeform)
@@ -129,26 +137,32 @@ python3 cis_reports.py -dt --all-resources
 ## Module Details
 
 ### Groups Module (`oci-core-deploy-groups`)
+
 Reads from `csv_groups.csv` to create 43 IAM groups:
+
 - **7 Administrative groups**: CIS-Auditors, Administrators, NetworkAdmins, DBAdmins, IAMAdmins, SECAdmins, EPM_Admins
 - **5 Finance/Audit groups**: Finance-Auditors, Finance_ReadOnly, ARCS-Prod-Admins, ARCS-Test-Admins, ARCS_Users  
 - **4 EPM Service groups**: ServiceAdministrators, PowerUsers, Users, Viewer
 - **27 ARCS functional roles**: Granular permissions for reconciliation, data integration, reporting, etc.
 
-
 ### Compartments
+
 - **shared-services**: Future home of Cloud Guard, logging, monitoring
 - **SaaS-Root**: All EPM applications with environment separation
 - **IaaS-Root**: Prepared structure for future infrastructure
 
 ### Policies Module (`oci-core-policies`)
+
 Centralizes all governance:
+
 - IAM policies for group permissions
 - Quota policies (zero quotas for security)
 - Tag namespace and cost tracking
 
 ### Security Module (`oci-core-deploy-security`) ⭐ NEW
+
 Implements CIS compliance security controls:
+
 - **Cloud Guard**: Enabled with Oracle-managed detector recipes monitoring entire tenancy
 - **Notifications**: Centralized security notification topic with email subscriptions
 - **Event Monitoring**: 11 event rules tracking IAM, network, and Cloud Guard changes
@@ -159,14 +173,17 @@ See [oci-core-deploy-security/README.md](./oci-core-deploy-security/README.md) f
 ## Customization
 
 ### Adding New Groups
+
 1. Edit `oci-core-deploy-groups/csv_groups.csv`
 2. Re-run deployment
 
 ### Enabling IaaS (Future)
+
 1. Update quotas in `oci-core-policies/quotas.tf`
 2. Set `enable_iaas_policies = true` in deployment
 
 ### Adding EPM Modules
+
 The structure supports adding Planning, EDMCS, or Freeform by moving them from "Parked" status.
 
 ## Repository Structure
@@ -185,6 +202,7 @@ OCI-Hanover/
 ## Next Steps
 
 After deployment:
+
 1. **Confirm email subscriptions** - Security team must click confirmation links
 2. **Add users to appropriate groups** - Assign IAM group memberships
 3. **Review Cloud Guard findings** - Navigate to Security > Cloud Guard in OCI Console
@@ -203,12 +221,12 @@ After deployment:
 ## Support
 
 For questions or issues:
+
 - 📘 Check [QUICKSTART.md](./QUICKSTART.md) for deployment guidance
 - 📋 Review [CIS_COMPLIANCE_IMPROVEMENTS.md](./CIS_COMPLIANCE_IMPROVEMENTS.md) for compliance information
 - 📝 Consult module-specific README files in each directory
 - 📖 Reference TAD ICF2511 for architecture requirements
 - 🔍 Refer to Oracle CIS Foundations Benchmark v3.0.0
-
 
 ## Contributor
 

@@ -26,6 +26,7 @@ Allow group <your-group> to read compartments in tenancy
 ## Step 1: Configure Terraform Variables
 
 1. Copy the example variables file:
+
 ```bash
 cd deployment
 cp terraform.tfvars.example terraform.tfvars
@@ -37,6 +38,7 @@ cp terraform.tfvars.example terraform.tfvars
    - Optional: Cloud Guard and notification settings
 
 **Minimum Required Configuration:**
+
 ```hcl
 tenancy_ocid     = "ocid1.tenancy.oc1..aaaaaaaa..."
 user_ocid        = "ocid1.user.oc1..aaaaaaaa..."
@@ -57,6 +59,7 @@ terraform init
 ```
 
 Expected output:
+
 ```
 Initializing modules...
 Initializing the backend...
@@ -73,6 +76,7 @@ terraform plan
 ```
 
 Review the resources that will be created:
+
 - 1 Cloud Guard configuration
 - 1 Cloud Guard target
 - 1 ONS notification topic
@@ -101,6 +105,7 @@ After deployment completes:
 ## Step 6: Verify Deployment
 
 ### Verify Cloud Guard
+
 ```bash
 # Via OCI Console
 Navigate to: Security > Cloud Guard > Overview
@@ -111,6 +116,7 @@ oci cloud-guard configuration get --compartment-id <tenancy-ocid>
 ```
 
 ### Verify Notifications
+
 ```bash
 # Via OCI Console
 Navigate to: Application Integration > Notifications
@@ -121,6 +127,7 @@ oci ons topic list --compartment-id <shared-services-compartment-id>
 ```
 
 ### Verify Event Rules
+
 ```bash
 # Via OCI Console
 Navigate to: Observability > Events Service > Rules
@@ -155,6 +162,7 @@ terraform output
 ```
 
 Key outputs:
+
 - `security_configuration`: Status of security services
 - `cis_compliance_status`: List of CIS recommendations addressed
 - `security_notification_topic`: Topic ID and name
@@ -162,16 +170,21 @@ Key outputs:
 ## Troubleshooting
 
 ### Issue: "Service CloudGuard is not available"
+
 **Solution**: Cloud Guard may not be available in your region. Contact Oracle Support.
 
 ### Issue: Email subscriptions stuck in "Pending"
+
 **Solution**: Check spam folder for confirmation emails. Subscriptions expire after 7 days if not confirmed.
 
 ### Issue: "Insufficient permissions"
+
 **Solution**: Verify your user has the required IAM policies (see prerequisites).
 
 ### Issue: Terraform state conflicts
+
 **Solution**: If multiple people are deploying, use remote state:
+
 ```hcl
 # Add to deployment/provider.tf
 terraform {
@@ -204,6 +217,7 @@ After deployment:
 ## Support
 
 For issues or questions:
+
 1. Review the troubleshooting section above
 2. Check Terraform and OCI provider logs
 3. Consult OCI documentation

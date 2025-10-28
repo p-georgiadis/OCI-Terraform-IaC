@@ -6,6 +6,7 @@ Central deployment configuration for all Hanover OCI infrastructure modules per 
 
 1. Update `terraform.tfvars` with your OCI credentials
 2. Run:
+
    ```bash
    terraform init
    terraform plan
@@ -15,6 +16,7 @@ Central deployment configuration for all Hanover OCI infrastructure modules per 
 ## What Gets Deployed
 
 ### Resources Created (77 total)
+
 - **43 IAM Groups** (including CIS-Auditors for compliance checking)
 - **13 Compartments**:
   - 1 shared-services
@@ -30,6 +32,7 @@ Central deployment configuration for all Hanover OCI infrastructure modules per 
 ## Deployment Order
 
 The modules deploy automatically in this dependency order:
+
 1. **Groups Module** - All IAM groups including ARCS roles
 2. **Shared Services Compartment** - For security services
 3. **SaaS Compartments** - EPM/ARCS hierarchy
@@ -39,11 +42,13 @@ The modules deploy automatically in this dependency order:
 ## Current Configuration
 
 ### Active Services
+
 - ARCS (Account Reconciliation) in prod/test environments
 - Zero quotas preventing unauthorized resource creation
 - CIS compliance auditing capability
 
 ### Reserved for Future
+
 - IaaS infrastructure (Network, Applications, Database compartments)
 - Other EPM modules (Planning, EDMCS, Freeform)
 - Cloud Guard and logging services
@@ -51,6 +56,7 @@ The modules deploy automatically in this dependency order:
 ## Quota Enforcement
 
 All compartments have zero quotas to prevent unauthorized resources:
+
 - **SaaS-Root**: No IaaS/PaaS resources allowed
 - **IaaS-Root**: Locked until approved for use
 - **shared-services**: Limited to security services only (1 VCN allowed)
@@ -62,6 +68,7 @@ After deployment, run CIS compliance check
 Create a Python Virtual Environment with required modules
 Libraries for Dashboard Graphics (optional)
 Libraries for XLSX Output (optional)
+
 ```bash
 # After deployment, run CIS compliance check
 python3 -m venv python-venv
@@ -76,7 +83,9 @@ wget https://raw.githubusercontent.com/oci-landing-zones/oci-cis-landingzone-qui
 oci session authenticate
 python3 cis_reports.py --obp
 ```
-or in Cloud Shell: 
+
+or in Cloud Shell:
+
 ```bash
 wget https://raw.githubusercontent.com/oci-landing-zones/oci-cis-landingzone-quickstart/main/scripts/cis_reports.py
 python3 cis_reports.py -dt --all-resources
@@ -104,6 +113,7 @@ provider.tf        # OCI provider config
 ## State Management
 
 For production, consider remote state:
+
 ```hcl
 terraform {
   backend "s3" {

@@ -128,17 +128,20 @@ Expected Final (after manual remediation):
 ## Implementation Statistics
 
 ### Code Metrics
+
 - **New Files Created**: 11
 - **Lines of Terraform**: 611
 - **Lines of Documentation**: ~1,500
 - **Resources Deployed**: 13+ (1 Cloud Guard config, 1 target, 1 topic, N subscriptions, 11 event rules)
 
 ### Deployment Time
+
 - **Initial Apply**: 2-5 minutes
 - **Email Confirmation**: User action required (immediate)
 - **Cloud Guard Activation**: Up to 1 hour for first scan
 
 ### Maintenance
+
 - **Ongoing**: Zero - fully automated monitoring
 - **Quarterly**: Review Cloud Guard findings
 - **Annual**: Review and update notification emails
@@ -146,6 +149,7 @@ Expected Final (after manual remediation):
 ## Files Created/Modified
 
 ### New Files
+
 1. `oci-core-deploy-security/main.tf` - 20 lines
 2. `oci-core-deploy-security/cloudguard.tf` - 66 lines
 3. `oci-core-deploy-security/notifications.tf` - 23 lines
@@ -159,6 +163,7 @@ Expected Final (after manual remediation):
 11. `deployment/terraform.tfvars.example` - 120+ lines
 
 ### Modified Files
+
 1. `deployment/main.tf` - Added security module integration
 2. `deployment/variables.tf` - Added security variables
 3. `deployment/outputs.tf` - Added security outputs
@@ -184,18 +189,21 @@ Expected Final (after manual remediation):
 ## Benefits Delivered
 
 ### Security
+
 ✅ **Real-time threat detection** via Cloud Guard
 ✅ **Automated monitoring** of 11 critical event types
 ✅ **Immediate alerting** to security team
 ✅ **Tenancy-wide coverage** with root compartment target
 
 ### Compliance
+
 ✅ **13 CIS recommendations** automated
 ✅ **50% reduction** in failing checks
 ✅ **Clear audit trail** via event rules
 ✅ **Documented procedures** for remaining items
 
 ### Operations
+
 ✅ **Zero maintenance** - fully automated
 ✅ **Scalable** - covers all current and future resources
 ✅ **Cost-effective** - uses Oracle-managed recipes
@@ -204,12 +212,14 @@ Expected Final (after manual remediation):
 ## Cost Considerations
 
 ### Included at No Additional Cost
+
 - Cloud Guard (included in OCI subscription)
 - Event Rules (no charge)
 - Notification Service topic (no charge up to first 1M messages/month)
 - Email delivery (no charge up to first 1,000 emails/month)
 
 ### Potential Costs
+
 - Email subscriptions beyond 1,000/month (~$0.10 per 1,000 emails)
 - SMS/HTTPS notifications if added (varies by destination)
 - Service Connector Hub if adding SIEM integration (future)
@@ -251,6 +261,7 @@ Expected Final (after manual remediation):
 ## Conclusion
 
 This implementation provides a **production-ready, automated solution** that:
+
 - Addresses **13 CIS recommendations**
 - Requires **zero ongoing maintenance**
 - Follows **OCI best practices**
