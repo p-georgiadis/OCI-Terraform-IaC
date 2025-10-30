@@ -70,25 +70,12 @@ output "cis_compliance_summary" {
     notification_topic_created = true
     event_rules_created        = var.enable_cloud_guard ? 11 : 10
     recommendations_addressed = concat(
-      [
-        "4.2 - Notification topic and subscription created",
-        "4.3 - Identity Provider change notifications configured",
-        "4.4 - IdP Group Mapping change notifications configured",
-        "4.5 - IAM Group change notifications configured",
-        "4.6 - IAM Policy change notifications configured",
-        "4.7 - User change notifications configured",
-        "4.8 - VCN change notifications configured",
-        "4.9 - Route Table change notifications configured",
-        "4.10 - Security List change notifications configured",
-        "4.11 - Network Security Group change notifications configured",
-        "4.12 - Network Gateway change notifications configured"
-      ],
       var.enable_cloud_guard ? [
-        "4.14 - Cloud Guard enabled in root compartment",
-        "4.15 - Cloud Guard problem notifications configured"
+        "Cloud Guard enabled in root compartment",
+        "Cloud Guard problem notifications configured"
       ] : [
-        "4.14 - Cloud Guard DISABLED (requires paid subscription)",
-        "4.15 - Cloud Guard notifications DISABLED (requires paid subscription)"
+        "Cloud Guard DISABLED (requires paid subscription)",
+        "Cloud Guard notifications DISABLED (requires paid subscription)"
       ]
     )
   }

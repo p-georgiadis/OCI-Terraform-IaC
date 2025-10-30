@@ -84,3 +84,7 @@ env/
 cis-reports/
 *-compliance-reports/
 cis_reports_*.csv
+
+# Claude AI files
+.claude/
+CLAUDE.md
