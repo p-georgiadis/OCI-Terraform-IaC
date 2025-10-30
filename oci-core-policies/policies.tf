@@ -102,7 +102,7 @@ resource "oci_identity_policy" "arcs_test_admin_policies" {
   statements = [
     "Allow group ARCS-Test-Admins to manage epm-planning-environment-family in compartment SaaS-Root:ARCS:ARCS-Test",
     "Allow group ARCS-Test-Admins to read all-resources in compartment SaaS-Root:ARCS:ARCS-Test",
-    # CIS 1.15: Prevent deletion of storage resources (buckets and objects)
+
     "Allow group ARCS-Test-Admins to manage object-family in compartment SaaS-Root:ARCS:ARCS-Test where all {target.bucket.name = 'arcs-test-*', request.permission != 'OBJECT_DELETE', request.permission != 'BUCKET_DELETE'}",
   ]
 }
@@ -182,5 +182,31 @@ resource "oci_identity_policy" "cis_auditor_policies" {
     "Allow group CIS-Auditors to read keys in tenancy",
     "Allow group CIS-Auditors to read tag-namespaces in tenancy",
     "Allow group CIS-Auditors to use ons-family in tenancy where any {request.operation!=/Create*/, request.operation!=/Update*/, request.operation!=/Delete*/, request.operation!=/Change*/}",
+  ]
+}
+
+# IAM Administrator Access to Terraform State
+resource "oci_identity_policy" "terraform_state_admin_access" {
+  compartment_id = var.tenancy_ocid
+  name           = "terraform-state-admin-access"
+  description    = "Allow IAM Admins to manage Terraform state"
+
+  statements = [
+    "Allow group ${var.iam_admin_group} to read buckets in tenancy where target.bucket.name='terraform-state'",
+    "Allow group ${var.iam_admin_group} to manage objects in tenancy where target.bucket.name='terraform-state'",
+    "Allow group ${var.iam_admin_group} to manage object-family in tenancy where target.bucket.name='terraform-state'"
+  ]
+}
+
+# CIS Auditor Access to Terraform State (explicit read-only)
+resource "oci_identity_policy" "terraform_state_auditor_access" {
+  compartment_id = var.tenancy_ocid
+  name           = "terraform-state-auditor-access"
+  description    = "Allow CIS Auditors explicit read access to Terraform state bucket"
+
+  statements = [
+    "Allow group CIS-Auditors to read buckets in tenancy where target.bucket.name='terraform-state'",
+    "Allow group CIS-Auditors to read objects in tenancy where target.bucket.name='terraform-state'",
+    "Allow group CIS-Auditors to inspect object-family in tenancy where target.bucket.name='terraform-state'"
   ]
 }

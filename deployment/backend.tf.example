@@ -1,0 +1,52 @@
+# Terraform Backend Configuration - OCI Object Storage
+#
+# This configures remote state storage using OCI Object Storage
+# via S3-compatible API for better state locking support
+#
+# Prerequisites:
+# - Object Storage bucket 'terraform-state' created manually (foundational infrastructure)
+# - IAM policies configured for state access
+# - Customer Secret Keys created for S3-compatible access
+# - Credentials exported in environment: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+#
+# Architecture:
+# - State bucket: Created manually (NOT managed by this Terraform)
+# - State file: Managed by Terraform (stored in manually-created bucket)
+# - This eliminates circular dependency and destroy risk
+#
+# State Locking:
+# - Automatic locking using S3-compatible API
+# - Lock file: deployment.tfstate.lock (automatically managed)
+#
+# Backup:
+# - Versioning enabled on bucket (90-day retention)
+# - Manual backup recommended before major changes
+#
+# Credentials:
+# - Load credentials before running Terraform:
+#   source ~/.oci/terraform-backend-credentials
+# - Never commit credentials to git
+
+terraform {
+  backend "s3" {
+    # Bucket configuration
+    bucket = "terraform-state"
+    key    = "deployment.tfstate"
+    region = "eu-frankfurt-1"  # Your OCI region
+
+    # OCI S3-compatible endpoint
+    # Format: https://<namespace>.compat.objectstorage.<region>.oraclecloud.com
+    endpoint = "https://frjpqj7r0mi3.compat.objectstorage.eu-frankfurt-1.oraclecloud.com"
+    # S3-compatible settings for OCI
+    skip_region_validation      = true
+    skip_credentials_validation = true
+    skip_metadata_api_check     = true
+    force_path_style            = true
+
+    # Authentication via environment variables:
+    # - AWS_ACCESS_KEY_ID (from Customer Secret Key)
+    # - AWS_SECRET_ACCESS_KEY (from Customer Secret Key)
+    # These must be set before running terraform init
+  }
+}
+

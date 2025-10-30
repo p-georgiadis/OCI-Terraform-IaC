@@ -88,3 +88,6 @@ cis_reports_*.csv
 # Claude AI files
 .claude/
 CLAUDE.md
+
+# Ignore Terraform backend credentials file
+.oci/terraform-backend-credentials
