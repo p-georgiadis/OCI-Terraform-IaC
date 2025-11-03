@@ -1,7 +1,6 @@
 output "policy_ids" {
   description = "Map of policy names to OCIDs"
   value = {
-    admin           = oci_identity_policy.admin_policies.id
     iam_admin       = oci_identity_policy.iam_admin_policies.id
     sec_admin       = oci_identity_policy.sec_admin_policies.id
     epm_service     = oci_identity_policy.epm_service_admin_policies.id
