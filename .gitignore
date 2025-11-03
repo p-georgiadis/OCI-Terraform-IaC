@@ -91,3 +91,5 @@ CLAUDE.md
 
 # Ignore Terraform backend credentials file
 .oci/terraform-backend-credentials
+*/backend.tf
+deployment/backend.tf
