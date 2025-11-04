@@ -1,25 +1,18 @@
 # All IAM Policies
 
-# Tenancy-level Administrator policies
-resource "oci_identity_policy" "admin_policies" {
-  compartment_id = var.tenancy_ocid
-  name           = "admin-tenancy-policies"
-  description    = "Administrator policies for tenancy management"
-
-  statements = [
-    "Allow group Administrators to manage all-resources in tenancy",
-  ]
-}
-
-# IAM Administrator policies
+# IAM Administrator policies (CIS 1.3 compliant)
 resource "oci_identity_policy" "iam_admin_policies" {
   compartment_id = var.tenancy_ocid
   name           = "iam-admin-policies"
-  description    = "IAM administrator policies"
+  description    = "IAM administrator policies - protects Administrators group (CIS 1.3)"
 
   statements = [
-    "Allow group ${var.iam_admin_group} to manage users in tenancy",
-    "Allow group ${var.iam_admin_group} to manage groups in tenancy",
+    # CIS 1.3: Prevent IAM admins from modifying Administrators group or its members
+    "Allow group ${var.iam_admin_group} to manage users in tenancy where target.group.name != 'Administrators'",
+    "Allow group ${var.iam_admin_group} to manage groups in tenancy where target.group.name != 'Administrators'",
+    "Allow group ${var.iam_admin_group} to manage dynamic-groups in tenancy",
+    "Allow group ${var.iam_admin_group} to manage authentication-policies in tenancy",
+    "Allow group ${var.iam_admin_group} to manage identity-providers in tenancy",
     "Allow group ${var.iam_admin_group} to manage policies in tenancy",
     "Allow group ${var.iam_admin_group} to manage compartments in tenancy",
     "Allow group ${var.iam_admin_group} to read audit-events in tenancy",
@@ -27,7 +20,6 @@ resource "oci_identity_policy" "iam_admin_policies" {
     "Allow group ${var.iam_admin_group} to read compartments in tenancy",
   ]
 }
-
 # Security Administrator policies for shared-services
 resource "oci_identity_policy" "sec_admin_policies" {
   compartment_id = var.tenancy_ocid
